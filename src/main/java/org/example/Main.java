@@ -4,13 +4,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        WebDriver driver=new ChromeDriver();
+        Map<String, Object> prefs = new HashMap<String, Object>();
+prefs.put("profile.default_content_setting_values.notifications", 2);
+ChromeOptions options = new ChromeOptions();
+options.setExperimentalOption("prefs", prefs);
+        WebDriver driver=new ChromeDriver(options);
         driver.manage().window().maximize();
         List<String> urlCollection = new ArrayList<>();
 
@@ -28,7 +35,8 @@ public class Main {
             driver.findElement(By.id("url")).sendKeys(url);
             driver.findElement(By.cssSelector("input[type='submit']")).click();
            Thread.sleep(1500);
-            driver.findElement(By.xpath("(//a[@rel='nofollow'])[2]")).click();
+            driver.findElement(By.linkText("Download")).click(); 
+            //driver.findElement(By.xpath("(//a[@rel='nofollow'])[2]")).click();
 
         }
 
